@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    IMAGE_REPO_NAME: "sampleproject_aws"
+    IMAGE_REPO_NAME: "075577609825.dkr.ecr.eu-north-1.amazonaws.com/sampleproject_aws"
     IMAGE_TAG: "latest"
     AWS_DEFAULT_REGION: "eu-north-1"
 
