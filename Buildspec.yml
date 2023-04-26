@@ -8,15 +8,15 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 075577609825.dkr.ecr.eu-north-1.amazonaws.com
       - REPOSITORY_URI=075577609825.dkr.ecr.eu-north-1.amazonaws.com/sampleproject_aws
-      - IMAGE_TAG=${CODEBUILD_RESOLVED_SOURCE_VERSION}
-      - IMAGE_URI=${REPOSITORY_URI}:${IMAGE_TAG}
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=build-$CODEBUILD_BUILD_NUMBER
   
   build:
     commands:
       - echo Building the Docker image...
       - docker build -t sampleproject_aws .
       - echo Tagging the Docker image...
-      - docker tag ${REPOSITORY_URI}:latest ${IMAGE_URI}
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
       
   post_build:
     commands:
@@ -24,6 +24,7 @@ phases:
       - docker push 075577609825.dkr.ecr.eu-north-1.amazonaws.com/sampleproject_aws:latest
       - echo Writing image definitions file...
       - printf '[{"name":"sampleproject_aws","imageUri":"%s"}]' $IMAGE_URI > imagedefinitions.json
+      - cat imagedefinitions.json
 
 artifacts:
   files:
