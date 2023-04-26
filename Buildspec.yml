@@ -22,7 +22,7 @@ phases:
       - echo Pushing the Docker image to Amazon ECR...
       - docker push 075577609825.dkr.ecr.eu-north-1.amazonaws.com/sampleproject_aws:latest
       - echo Writing image definitions file...
-      - printf '[{"name":"sampleproject_aws","imageUri":"%s"}]' $IMAGE_URI > imagedefinitions.json
+      - printf '[{"name":"sampleproject_aws","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json
 
 artifacts:
