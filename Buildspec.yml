@@ -16,7 +16,7 @@ phases:
       - echo Building the Docker image...
       - docker build -t sampleproject_aws .
       - echo Tagging the Docker image...
-      - docker tag $REPOSITORY_URI:latest $IMAGE_URI
+      - docker tag ${REPOSITORY_URI}:latest ${IMAGE_URI}
       
   post_build:
     commands:
