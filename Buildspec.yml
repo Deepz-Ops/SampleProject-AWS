@@ -11,7 +11,7 @@ phases:
   build:
     commands:
       - echo Building the Docker image...
-      - docker build -t 075577609825.dkr.ecr.eu-north-1.amazonaws.com/sampleproject_aws .
+      - docker build -t $REPOSITORY_URI .
       - echo Tagging the Docker image...
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
       
