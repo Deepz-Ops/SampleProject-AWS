@@ -8,18 +8,20 @@ phases:
       - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 075577609825.dkr.ecr.eu-north-1.amazonaws.com
       - IMAGE_TAG=build-$CODEBUILD_BUILD_NUMBER
       - REPOSITORY_URI=075577609825.dkr.ecr.eu-north-1.amazonaws.com/deepanrepo
+      - IMAGE_URI=$REPOSITORY_URI:$IMAGE_TAG
   build:
     commands:
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI .
       - echo Tagging the Docker image...
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker tag $REPOSITORY_URI:latest $IMAGE_URI
       - docker images
       
   post_build:
     commands:
       - echo Pushing the Docker image to Amazon ECR...
       - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push $IMAGE_URI
       - echo Writing image definitions file...
       - printf '[{"name":"sampleproject_aws","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json
