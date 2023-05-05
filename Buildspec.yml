@@ -7,7 +7,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 075577609825.dkr.ecr.eu-north-1.amazonaws.com
       - IMAGE_TAG=build-$CODEBUILD_BUILD_NUMBER
-      - REPOSITORY_URI=075577609825.dkr.ecr.eu-north-1.amazonaws.com/sampleproject_aws
+      - REPOSITORY_URI=075577609825.dkr.ecr.eu-north-1.amazonaws.com/deepanrepo
   build:
     commands:
       - echo Building the Docker image...
