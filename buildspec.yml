@@ -20,7 +20,6 @@ phases:
   post_build:
     commands:
       - echo Pushing the Docker image to Amazon ECR...
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
       - docker push $IMAGE_URI
       - echo Writing image definitions file...
       - printf '[{"name":"sampleproject_aws","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
